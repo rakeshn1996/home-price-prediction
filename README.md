@@ -2,14 +2,23 @@
 home price prediction
 
 import pandas as pd
+
 import numpy as np 
+
 import scipy.stats as stats
+
 import matplotlib.pyplot as plt
+
 import seaborn as sn
+
 from sklearn.model_selection import cross_val_score 
+
 from sklearn.linear_model import LinearRegression
+
 from sklearn.metrics import accuracy_score
+
 from sklearn import metrics
+
 from sklearn.model_selection import train_test_split 
 
 
@@ -66,18 +75,20 @@ X.head()
 y = mx + b 
 
 Y - Predicted value 
+
 mx- The amount of impact our X has on our Y  
+
 b - Y intercept
  - 
 
-The constant term in linear regression analysis seems to be such a simple thing.
-Also known as the y intercept,
-it is simply the value at which the fitted line crosses the y-axis. 
+# The constant term in linear regression analysis seems to be such a simple thing.
+# Also known as the y intercept,
+# it is simply the value at which the fitted line crosses the y-axis. 
 
-The slope indicates the steepness of a line and the intercept indicates the location
-where it intersects an axis.
-The slope and the intercept define the linear relationship between two variables,
-and can be used to estimate an average rate of change. 
+# The slope indicates the steepness of a line and the intercept indicates the location
+# where it intersects an axis.
+# The slope and the intercept define the linear relationship between two variables,
+# and can be used to estimate an average rate of change. 
 
 
 lm = LinearRegression()
@@ -85,7 +96,8 @@ lm = LinearRegression()
 lm.fit(X,bostan.MV)
 
 help(lm)
-print('Estimated coefficient', lm.intercept_)
+ 
+ print('Estimated coefficient', lm.intercept_)
 
 print('Number of Coefficients', len(lm.coef_))
 
@@ -96,11 +108,17 @@ Zip function is used to return the tuples of object
 # Visualization 
 
 plt.scatter(bostan.RM,bostan.MV,color=['b','r'])
+
 plt.xlabel("Average number of room")
+
 plt.ylabel("Housing Price")
+
 plt.title("Relationship between rm & Price")
+
 plt.xlim(1,10)
+
 plt.ylim(1,60)
+
 plt.show()
 
 there is a positive correlation between RM and housing prices.
@@ -108,31 +126,43 @@ there is a positive correlation between RM and housing prices.
 ---------------------------------------------------------------------------------------
 # Split the dataset 
 
-X_train, X_test, Y_train, Y_test = train_test_split(
-        bostan.RM,bostan.MV,test_size=0.33, random_state=5)
+X_train, X_test, Y_train, Y_test = train_test_split(bostan.RM,bostan.MV,test_size=0.33, random_state=5)
 
 
 print(type(X_train))
+
 print(type(Y_train))
+
 print(type(X_test))
+
 print(type(Y_test))
 
 print(X_train)
+
 print(X_train.shape)
+
 print(Y_train.shape)
+
 print(X_test.shape)
+
 print(Y_test.shape)
 
 
 
 print(X_train.values.reshape(-1,1))
+
 print(X_test.values.reshape(-1,1))
+
 print(Y_train.values.reshape(-1,1))
+
 print(Y_test.values.reshape(-1,1))
 
 X_train = X_train.values.reshape(-1,1)
+
 X_test = X_test.values.reshape(-1,1)
+
 Y_train = Y_train.values.reshape(-1,1)
+
 Y_test = Y_test.values.reshape(-1,1)
 
 lm = LinearRegression() # create linear object
@@ -140,12 +170,17 @@ lm = LinearRegression() # create linear object
 lm.fit(X_train,Y_train)
 
 # pred_train = lm.predict(X_train)
+
 Y_pred = lm.predict(X_test)
 
 plt.scatter(Y_test,Y_pred, color=['b','r'])
+
 plt.xlabel("Actual Prices")
+
 plt.ylabel("Predicted Prices")
+
 plt.title("Actual Prices and predicted Prices")
+
 
 Ideally, the scatter plot should create a linear line. 
 Since the model does not fit 100%, the scatter plot is not creating a linear line.
@@ -153,7 +188,7 @@ Since the model does not fit 100%, the scatter plot is not creating a linear lin
 ----------------------------------------------------------------------------------------
 # Error Validating the model 
 
-Mean Squared Error
+""" Mean Squared Error
 
 The mean squared error tells you how close a regression line is to a set of points.
 It does this by taking the distances from the points to the regression line (these distances are the “errors”) and squaring them.
@@ -162,14 +197,14 @@ The squaring is necessary to remove any negative signs.
 To check the level of error of a model, 
 we can calculate Mean Squared Error. 
 It is one of the procedure to measures the average of the squares of error. 
-Basically, it will check the difference between actual value and the predicted value. 
+Basically, it will check the difference between actual value and the predicted value. """
 
 mse = metrics.mean_squared_error(Y_test,Y_pred)
 
 print(mse)
 
-The smaller the means squared error, the closer you are to finding the line of best fit.
-Depending on your data, it may be impossible to get a very small value for the mean squared error. 
+# The smaller the means squared error, the closer you are to finding the line of best fit.
+# Depending on your data, it may be impossible to get a very small value for the mean squared error. 
 
 
 Root Mean Squared Error
@@ -203,31 +238,43 @@ check whether you are doing a good job with your parameters.
 
 
 plt.scatter(lm.predict(X_train), lm.predict(X_train)-Y_train,c=['b','r'],s=40,alpha=0.5)
-#plt.scatter(lm.predict(X_test), lm.predict(X_test)-Y_test,c='g',s=40)
+
+plt.scatter(lm.predict(X_test), lm.predict(X_test)-Y_test,c='g',s=40)
+
 plt.hlines(y=0,xmin=0,xmax=50)
+
 plt.title('Residual plot using training(blue) and testing(green) data')
+
 plt.ylabel('Residual')
 
 print("lr.coef_: {}".format(lm.coef_))
+
 print("lr.intercept_: {}".format(lm.intercept_))
+
 print("Training set score: {:.2f}".format(lm.score(X_train, Y_train)))
+
 print("Test set score: {:.7f}".format(lm.score(X_test, Y_test)))
 
 --------------------------------------------------------------------------------------------------
 
 Creating model with another feature 
 
-X_train, X_test, Y_train, Y_test = train_test_split(
-        bostan.ZN,bostan.MV,test_size=0.33, random_state=10)
+X_train, X_test, Y_train, Y_test = train_test_split(bostan.ZN,bostan.MV,test_size=0.33, random_state=10)
 
 print(X_train.values.reshape(-1,1))
+
 print(X_test.values.reshape(-1,1))
+
 print(Y_train.values.reshape(-1,1))
+
 print(Y_test.values.reshape(-1,1))
 
 X_train = X_train.values.reshape(-1,1)
+
 X_test = X_test.values.reshape(-1,1)
+
 Y_train = Y_train.values.reshape(-1,1)
+
 Y_test = Y_test.values.reshape(-1,1)
 
 lm = LinearRegression() # create linear object
@@ -239,8 +286,11 @@ a = lm.fit(X_train,Y_train)
 Y_pred = a.predict(X_test)
 
 plt.scatter(Y_test,Y_pred,c=['r','b'])
+
 plt.xlabel("Actual Prices")
+
 plt.ylabel("Predicted Prices")
+
 plt.title("Actual Prices and predicted Prices")
 
 mse = metrics.mean_squared_error(Y_test,Y_pred)
@@ -250,28 +300,37 @@ print(mse)
 print(np.sqrt(metrics.mean_squared_error(Y_test,Y_pred)))
 
 plt.scatter(lm.predict(X_train), lm.predict(X_train)-Y_train,c=['b','r'],s=40,alpha=0.5)
-#plt.scatter(lm.predict(X_test), lm.predict(X_test)-Y_test,c='g',s=40)
+
+plt.scatter(lm.predict(X_test), lm.predict(X_test)-Y_test,c='g',s=40)
+
 plt.hlines(y=0,xmin=0,xmax=50)
+
 plt.title('Residual plot using training(blue) and testing(green) data')
+
 plt.ylabel('Residual')
 
 ----------------------------------------------------------------------------------------- 
 
 print("lr.coef_: {}".format(a.coef_))
+
 print("lr.intercept_: {}".format(a.intercept_))
+
 print("Training set score: {:.2f}".format(a.score(X_train, Y_train)))
+
 print("Test set score: {:.7f}".format(a.score(X_test, Y_test)))
 
 ---------------------------------------------------------------------------------- 
 
 Multiple Linear Regression 
 
-X_train, X_test, Y_train, Y_test = train_test_split(
-        bostan[['ZN','RM']],bostan.MV,test_size=0.33, random_state=5)
+X_train, X_test, Y_train, Y_test = train_test_split(bostan[['ZN','RM']],bostan.MV,test_size=0.33, random_state=5)
 
 print(X_train.shape)
+
 print(X_test.shape)
+
 print(Y_train.shape)
+
 print(Y_test.shape)
 
 lm = LinearRegression() # create linear object
@@ -282,8 +341,11 @@ a = lm.fit(X_train,Y_train)
 Y_pred = a.predict(X_test)
 
 print("lr.coef_: {}".format(a.coef_))
+
 print("lr.intercept_: {}".format(a.intercept_))
+
 print("Training set score: {:.2f}".format(a.score(X_train, Y_train)))
+
 print("Test set score: {:.7f}".format(a.score(X_test, Y_test)))
 
 mse = metrics.mean_squared_error(Y_test,Y_pred)
